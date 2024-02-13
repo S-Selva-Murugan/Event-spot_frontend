@@ -1,0 +1,16 @@
+/* ActualProfile.css */
+
+.main-container {
+    min-height: 100vh; /* Adjust to your layout needs */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/009/903/093/non_2x/confetti-image-for-birthday-party-background-simple-tinsel-and-confetti-explosion-colorful-confetti-on-a-transparent-background-event-and-party-celebration-elements-free-png.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff; /* Set text color to white or a suitable color for visibility */
+  }
+  
+
+  

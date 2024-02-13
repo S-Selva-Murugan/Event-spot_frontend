@@ -1,0 +1,12 @@
+.errors{
+    font-size: .875em;
+    color: rgba(220, 53, 69, 1.0);
+}
+.border{
+
+    border-color:rgba(220, 53, 69, 1.0) 
+}
+
+.title{
+    font-size: 1.1rem;
+}

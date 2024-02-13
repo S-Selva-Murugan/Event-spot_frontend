@@ -1,0 +1,17 @@
+
+.cards-display{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 200px; 
+    box-sizing: border-box;
+  }
+
+  /* no need of card */
+  
