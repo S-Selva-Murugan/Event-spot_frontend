@@ -1,4 +1,4 @@
-import React,{useEffect,useRef} from 'react'
+import React,{useEffect,useRef,memo} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { startAllBookedStatusfalse } from '../../react-redux/action/bookingDetailsAction'
 import { useContext } from 'react'
@@ -53,4 +53,4 @@ const TicketNotPaidYet = () => {
   )
 }
 
-export default TicketNotPaidYet
+export default memo(TicketNotPaidYet)

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useContext,useEffect } from 'react'
 import axios from '../Api_Resources/axios';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -9,6 +9,8 @@ import { Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
 import './register.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MyContext } from '../../ContextApi/Context';
+import { jwtDecode} from 'jwt-decode';
 
 const loginValidationSchema = yup.object({
   email: yup.string().required().email(),
@@ -16,6 +18,15 @@ const loginValidationSchema = yup.object({
 });
 
 export default function Login() {
+  const {setUserData} = useContext(MyContext)
+  const tokenData = localStorage.getItem('token')
+
+  useEffect(()=>{
+    if(tokenData){
+      setUserData(jwtDecode(tokenData))
+    }
+
+  },[tokenData])
   const navigate = useNavigate();
   const [serverErrors, setServerErrors] = useState('');
   const snackbarRef = useRef(null);
@@ -32,7 +43,7 @@ export default function Login() {
         setServerErrors('');
         const response = await axios.post('api/user/login', values);
         localStorage.setItem('token', response.data.token);
-        console.log(response.data.token);
+        console.log(response.data.token,"in login");
         setTimeout(() => {
           navigate('/user-profile');
         }, 2000);
@@ -48,16 +59,16 @@ export default function Login() {
 
   return (
     <div>
-      <Row className='maxi'>
-        <Col md={6}>
-          <div>
-            <h1 style={{ marginLeft: '60px', marginTop: '15px' }}>Login</h1>
+      <Row className='maxi'  >
+        <Col md={6}  >
+          <div >
+            <h1 style={{margin:"50px 0 50px 20%" }}>Login in to your account</h1>
             <Form onSubmit={formik.handleSubmit} style={{ marginLeft: '60px', marginTop: '20px' }}>
 
               <FormGroup>
                 <strong for='email' className="form-label">Email:</strong>
                 <Input
-                  style={{width:"500px"}}
+                  style={{ width: "80%" }}
                   type='text'
                   id='email'
                   name='email'
@@ -72,7 +83,7 @@ export default function Login() {
               <FormGroup>
                 <strong for='password'>Password:</strong>
                 <Input
-                  style={{width:"500px"}}
+                  style={{ width: "80%" }}
                   type='password'
                   id='password'
                   name='password'
@@ -89,17 +100,21 @@ export default function Login() {
                 <ToastContainer />
               </div>
 
-              <div>
-                
-                <button type='submit' className='btn btn-dark'>
-                  Login
-                </button>
-                <br/>
-                <br/>
-                <div>
-                  Not Yet Registered ?<Link to='/register'>Register</Link><br/><Link to="/forgot-password" style={{textAlign:"center"}}>forgot-password</Link>
-                </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+
+                <div>Don't have an account ? <Link to='/register'>Register</Link></div>
+                <div style={{marginRight: "20%"}}> <Link to="/forgot-password">Forgot your password?</Link></div>
               </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end",margin:"5% 20% 0 0 " }}>
+                  <button type='submit' className='btn btn-dark'>
+
+
+                    Login
+                  </button>
+                </div>
+
+
             </Form>
           </div>
         </Col>
@@ -121,7 +136,7 @@ export default function Login() {
           </div>
         </Col>
       </Row>
-        <Snackbar ref={snackbarRef} />
+      <Snackbar ref={snackbarRef} />
     </div>
   );
 }

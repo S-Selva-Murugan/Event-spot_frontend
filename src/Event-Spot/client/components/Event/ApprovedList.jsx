@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import axios from '../Api_Resources/axios';
-import { pagination } from '../../react-redux/action/paginateAction'; // Adjust the path as needed
+// import axios from '../Api_Resources/axios';
 
-function Approved({ events, pagination }) {
+function Approved({ events }) {
   const [expandedEventId, setExpandedEventId] = useState(null);
-
-  useEffect(() => {
-    // Fetch events when component mounts
-    pagination(1); // Assuming you want to fetch the first page initially
-  }, [pagination]);
 
   const handleToggleDescription = (eventId) => {
     setExpandedEventId((prevExpandedId) =>
@@ -17,27 +11,26 @@ function Approved({ events, pagination }) {
     );
   };
 
-  const handleApprove = async (eventId) => {
-    try {
-      const response = await axios.put(`/api/event/cancel-approve/${eventId}`);
-      // After cancelling approval, you might want to refetch the events
-      pagination(1); // Assuming you want to refetch the first page
-    } catch (error) {
-      console.error('Error cancelling approval:', error);
-    }
-  };
+  // const handleApprove = async (eventId) => {
+  //   try {
+  //     const response = await axios.put(`/api/event/cancel-approve/${eventId}`);
+  //     console.log(response)
+  //   } catch (error) {
+  //     console.error('Error cancelling approval:', error);
+  //   }
+  // };
 
   return (
     <div className="container mt-5">
-      <div className="card text-center bg-light p-3" style={{width:"1050px"}}>
-        <h1 className="card-title">Approved list</h1>
+      <div>
+        <h1 style={{ borderBottom: '3px solid black', paddingBottom: '1px'}}>Approved list</h1>
       </div>
       <div className="row events-list" style={{ marginTop: '20px' }}>
         {events.map((event) => (
           <div key={event._id} className="col-md-4 mb-4">
             <div className="card" style={{ width: '18rem' }}>
               <img
-                src={`http://localhost:3333/Uploads/images/${event.posters[0].image}`}
+                src={`${process.env.REACT_APP_IMAGE_URL}${event.posters[0].image}`}
                 className="card-img-top"
                 alt="image"
               />
@@ -57,12 +50,12 @@ function Approved({ events, pagination }) {
                 >
                   {expandedEventId === event._id ? 'Read Less' : 'Read More'}
                 </button>
-                <button
+                {/* <button
                   className="btn btn-danger"
                   onClick={() => handleApprove(event.id)}
                 >
                   Cancel approval
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -76,8 +69,5 @@ const mapStateToProps = (state) => ({
   events: state.events.filter((event) => event.isApproved), // Assuming your Redux state structure
 });
 
-const mapDispatchToProps = {
-  pagination,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Approved);
+export default connect(mapStateToProps)(Approved);

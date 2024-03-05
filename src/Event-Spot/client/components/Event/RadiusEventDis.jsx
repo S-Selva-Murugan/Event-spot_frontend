@@ -1,15 +1,13 @@
-import React, { useContext } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
 import EventCard from "./EventCard"
 import "./EventCardsDisplay.css"
-import { MyContext } from '../../ContextApi/Context'
 
-function RadiusEventDis() {
-    const {raduisEvents} = useContext(MyContext)
+function RadiusEventDis({raduisEvents}) {
   return (
-    <div className="containter">
-      <div className="head">
-    These are the radius event : {raduisEvents.length}
+    <div >
+
+      <div className="head" >
+ <h3 style={{color:"#023047",fontStyle:"oblique",marginTop:"20px"}}> In range Events : {raduisEvents.length}</h3>
       </div>
       <div className='cards-display'>
 

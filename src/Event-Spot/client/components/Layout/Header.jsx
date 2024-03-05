@@ -1,15 +1,16 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext,memo,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser ,faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faSearch,faUserAstronaut, faPlus} from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import Darkmode from '../Z_Dark_Mode/Darkmode';
 import { MyContext } from '../../ContextApi/Context';
-import eventLogo from "../../Z_images/event_logo.png"
+import eventLogo from "../../Z_images/EVENT_LOGO_FINAL.png"
+import "./Header.css"
 
 function Header() {
   const [search,setSearch] = useState(" ")
-  const {searchQuery,setSearchQuery,userData} = useContext(MyContext)
+  const {searchQuery,setSearchQuery,userData,profileDispatch,setUserData,setToken,profile} = useContext(MyContext)
   const navigate = useNavigate();
 
   const handleChangeLogout = () => {
@@ -25,7 +26,12 @@ function Header() {
       if (result.isConfirmed) {
         // Perform the logout logic
         localStorage.removeItem('token');
-        navigate('/login');
+        //empty the profile state in the app
+        profileDispatch({ type: 'CLEAR_PROFILE_DATA'})
+        setUserData("")
+        setToken("")
+        navigate('/login')
+
         
         Swal.fire({
           title: 'Logged Out!',
@@ -38,17 +44,19 @@ function Header() {
 
   const handleSearch = () => {
     setSearchQuery(search.toLowerCase())
-  };
+  }
+  useEffect(()=>{
+    console.log(userData,"in headers")
+  },[userData])
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          {/* <img style={{height:"50px",width:"0px",borderRadius:"20%"}} src={eventLogo}/> */}
-          LOGO
+          <img style={{height:"50px",width:"150px",border:"4px solid orange",borderRadius:"10px"}}  src={eventLogo}/>
         </Link>
         
-        {userData.role==="Organiser"&&<Link className="navbar-brand" to="/event-form">
+        {userData.role==="Organiser"&&<Link className=" nav-link navbar-brand" to="/event-form">
         <FontAwesomeIcon icon={faPlus} />Event
         </Link>}
     
@@ -68,14 +76,15 @@ function Header() {
             {localStorage.getItem("token") && (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/">
-                    Home
-                  </Link>
+                <Link className="nav-link active" aria-current="page" to="/">
+                  {console.log(userData.role)}
+                {(userData.role === "Organiser" || userData.role === "Admin") ? <h4 style={{marginTop:"10px"}}>DASHBOARD</h4> : <h2 style={{marginTop:"10px"}}>MAP</h2>}
+                </Link> 
                 </li>
               </>
             )}
           </ul>
-          <form className="d-flex mx-auto justify-content-start">
+          {/* <form className="d-flex mx-auto justify-content-start">
             <input
               className="form-control me-2 "
               type="search"
@@ -92,21 +101,32 @@ function Header() {
             >
               <FontAwesomeIcon icon={faSearch} />
             </button>
-          </form>
+          </form> */}
           <ul className="navbar-nav ml-auto" style={{ display:"flex"}}>
             {localStorage.getItem("token") ? (
               <>
-                <li className="nav-item">
+                <li className="nav-item ">
                   <Link to="/user-profile" >
-                    <FontAwesomeIcon icon={faUser} style={{ marginTop:"10px",marginRight:"10px"}}/>
+                  {/* <Link to="/profile-canvas" > */}
+
+                    {profile?.profilePic ?  <img
+                  className="rounded-circle mb-3"
+                  src={`${process.env.REACT_APP_IMAGE_URL}${profile.profilePic}`}
+                  alt="Profile"
+                  width="30"
+                  height="30"
+                  style={{ marginTop:"10px",marginRight:"10px"}}
+                /> :                     <FontAwesomeIcon icon={faUserAstronaut} style={{ marginTop:"15px",marginRight:"10px",width:"20",height:"20"}}/>
+              }
+
                   </Link>
                 </li>
-                <li className="nav-item" style={{marginRight:"10px"}}>
+                <li className="nav-item" style={{marginRight:"10px",marginTop:"5px"}}>
                 <Darkmode/>
 
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-outline-danger" onClick={handleChangeLogout}>
+                  <button className="btn btn-outline-danger" onClick={handleChangeLogout} style={{marginRight:"10px",marginTop:"5px"}}>
                     Logout
                   </button>
                 </li>
@@ -136,4 +156,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header)

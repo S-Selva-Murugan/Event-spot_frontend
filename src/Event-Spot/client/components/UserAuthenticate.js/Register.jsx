@@ -58,7 +58,7 @@ export default function Register() {
               <FormGroup>
                 <strong htmlFor='username'>Username:</strong>
                 <Input
-                  style={{width:"500px"}}
+                  style={{width:"90%"}}
                   type='text'
                   id='username'
                   name='username'
@@ -72,7 +72,7 @@ export default function Register() {
               <FormGroup>
                 <strong htmlFor='email'>Email:</strong>
                 <Input
-                  style={{width:"500px"}}
+                  style={{width:"90%"}}
                   type='text'
                   id='email'
                   name='email'
@@ -88,7 +88,7 @@ export default function Register() {
                   <FormGroup>
                     <strong htmlFor='number'>Number:</strong>
                     <Input
-                    style={{width:"240px"}}
+                    style={{width:"80%"}}
                       type='text'
                       id='number'
                       name='number'
@@ -103,7 +103,7 @@ export default function Register() {
                   <FormGroup>
                     <strong htmlFor='role'>Role:</strong>
                     <Input
-                    style={{width:"170px"}}
+                    style={{width:"78%"}}
                       type='select'
                       id='role'
                       name='role'
@@ -111,11 +111,12 @@ export default function Register() {
                       onChange={formik.handleChange}
                       className={formik.errors.role ? 'is-invalid' : ''}
                     >
-                      <option value='' disabled>
-                        Select a role
-                      </option>
-                      <option value='Customer'>Customer</option>
-                      <option value='Organiser'>Organiser</option>
+<option value='' disabled className='option'>
+  Select a role
+</option>
+<option value='Customer' >Customer</option>
+<option value='Organiser' >Organiser</option>
+
                     </Input>
                     <div className='invalid-feedback'>{formik.errors.role}</div>
                   </FormGroup>
@@ -125,7 +126,7 @@ export default function Register() {
               <FormGroup>
                 <strong htmlFor='password'>Password:</strong>
                 <Input
-                  style={{width:"500px"}}
+                  style={{width:"90%"}}
                   type='password'
                   id='password'
                   name='password'
@@ -140,17 +141,20 @@ export default function Register() {
                 <ToastContainer />
               </div>
 
-              <div>
+              
                 
-                <button type='submit' className='btn btn-dark'>
-                  Signup
-                </button>
-                <br/>
-                <br/>
-                <div>
-                Already have an account?<Link to='/login'>Login</Link>
+                <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+
+                <h5>Already have an account?<Link to='/login' >Login</Link></h5>
                   
-                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end',marginRight:"10%" }}>
+  <button type='submit' className='btn btn-dark sign-up'>
+    Signup
+  </button>
+</div>
+                
+
+
               </div>
             </Form>
           </div>
@@ -161,7 +165,7 @@ export default function Register() {
               className='image'
               src='https://images.pexels.com/photos/1378866/pexels-photo-1378866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
               alt='Login Image'
-              style={{ objectFit: 'cover', width: '800px', height: '585px' }}
+              style={{ objectFit: 'cover', width: "100%", height: '585px' }}
             />
           </div>
           <div className="image-background">
@@ -176,3 +180,5 @@ export default function Register() {
     </div>
   );
 }
+
+

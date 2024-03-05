@@ -24,7 +24,7 @@ export const pagination = (page = null) => {
       dispatch(paginationSuccess(events, totalPages, currentPage));
     } catch (err) {
       console.error(err);
-      dispatch(paginationError('Internal Server Error'));
+      dispatch(paginationError('No more events go back'));
     }
   };
 };

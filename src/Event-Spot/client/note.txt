@@ -1,0 +1,3 @@
+where and how to implement the req.query in the front code done in the backend
+can useMemo its possible to add it to the geoWithin
+cron.shedule is correct 

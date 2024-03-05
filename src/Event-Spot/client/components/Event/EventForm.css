@@ -10,3 +10,16 @@
 .title{
     font-size: 1.1rem;
 }
+
+.actor-div{
+    margin-top: 3%;
+
+}
+.actor{
+    display: flex;
+    justify-content: space-between;
+}
+
+.actor-form-group{
+    width: 80%;
+}

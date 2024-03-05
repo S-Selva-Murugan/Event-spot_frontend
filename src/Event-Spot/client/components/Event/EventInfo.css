@@ -1,3 +1,22 @@
 .borderClass{
     border: 2px solid black;
 }
+
+.border-style{
+    height: "400px";
+    width: "100%";
+    object-fit: "cover";
+    border-radius:"20px"
+
+}
+
+.event-details-container {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .card-body:hover {
+    background-color: #f0f0f0;
+  }
+  
